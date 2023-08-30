@@ -10,11 +10,9 @@ import SwiftyDropbox
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let dropboxAppKey = "1ozimqo3o18bo0x"
+        let dropboxAppKey = "<YOUR_APP_KEY>"
         switch(appPermission) {
         case .fullDropboxScoped:
             DropboxClientsManager.setupWithAppKey(dropboxAppKey)

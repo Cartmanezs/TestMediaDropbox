@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+class CachableMediaFile {
+    let mediaFiles: [MediaFile]
+    
+    init(mediaFiles: [MediaFile]) {
+        self.mediaFiles = mediaFiles
+    }
+}

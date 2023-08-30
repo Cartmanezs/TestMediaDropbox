@@ -8,6 +8,22 @@
 import XCTest
 @testable import TestMediaDropBox
 
+class MediaNetworkManagerTests: XCTestCase {
+    
+    func testFetchMediaFiles() {
+        let manager = MediaNetworkManager.shared
+        
+        let expectation = XCTestExpectation(description: "Media Files Fetched")
+        manager.fetchMediaFiles { mediaFiles in
+            XCTAssertFalse(mediaFiles.isEmpty)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 10.0)
+    }
+}
+
+
 final class TestMediaDropBoxTests: XCTestCase {
 
     override func setUpWithError() throws {

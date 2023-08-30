@@ -10,7 +10,7 @@ import SwiftyDropbox
 
 class MediaMainViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
         
     private var mediaFiles: [MediaFile] = [] {
         didSet {
@@ -27,9 +27,7 @@ class MediaMainViewController: UIViewController {
     private func authenticateIfNeeded() {
         if DropboxClientsManager.authorizedClient != nil || DropboxClientsManager.authorizedTeamClient != nil {
             fetchAndDisplayMediaFiles()
-            print("work")
         } else {
-            print("Not authenticated")
             configureAuthenticate()
         }
     }
@@ -40,12 +38,10 @@ class MediaMainViewController: UIViewController {
     }
     
     func fetchAndDisplayMediaFiles() {
-//        loadNextPageIfNecessary()
         mediaNetworkManager.fetchMediaFiles { [weak self] mediaFiles in
-             guard let self = self else { return }
-             self.mediaFiles = mediaFiles
-            self.tableView.reloadData()
-         }
+            guard let self = self else { return }
+            self.mediaFiles = mediaFiles
+        }
      }
 }
 
@@ -54,7 +50,6 @@ extension MediaMainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mediaFiles.count 
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCell", for: indexPath) as? MediaCell else {

@@ -1,0 +1,6 @@
+framework module Pods_TestMediaDropBoxTests {
+  umbrella header "Pods-TestMediaDropBoxTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
