@@ -21,5 +21,23 @@
 			</array>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>dbapi-2</string>
+		<string>dbapi-8-emm</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>db-1ozimqo3o18bo0x</string>
+				<string>db-1ozimqo3o18bo0x</string>
+				<string>db-1ozimqo3o18bo0x</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

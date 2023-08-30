@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,6 +18,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+    }
+    
+    @Published var userAuthed: Bool = false
+
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        let oauthCompletion: DropboxOAuthCompletion = { [weak self] in
+            guard let self = self else { return }
+            if let authResult = $0 {
+                switch authResult {
+                case .success:
+                    print("Success! User is logged into DropboxClientsManager.")
+                    self.userAuthed = true
+                    (self.window?.rootViewController as? MediaMainViewController)?.fetchAndDisplayMediaFiles()
+                case .cancel:
+                    print("Authorization flow was manually canceled by user!")
+                    self.userAuthed = false
+                case .error(_, let description):
+                    print("Error: \(String(describing: description))")
+                    self.userAuthed = false
+                }
+            }
+        }
+
+        switch(appPermission) {
+        case .fullDropboxScoped:
+            let _ = DropboxClientsManager.handleRedirectURL(url, completion: oauthCompletion)
+        case .fullDropboxScopedForTeamTesting:
+            let _ = DropboxClientsManager.handleRedirectURLTeam(url, completion: oauthCompletion)
+        }
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
